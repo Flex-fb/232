@@ -1,9 +1,12 @@
 import os
 import asyncio
+import nest_asyncio
 from flask import Flask
 from threading import Thread
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+nest_asyncio.apply()
 
 TOKEN = "8120669890:AAGRiXQ8Vf6HonUbNZKakZhCBEHipEwKSro"
 
@@ -35,5 +38,4 @@ async def main():
 
 if __name__ == "__main__":
     Thread(target=run_flask).start()
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    asyncio.run(main())
