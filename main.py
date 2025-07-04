@@ -42,6 +42,6 @@ async def run_bot():
     await app.updater.idle()
 
 # Запуск Flask и бота параллельно
-if name == "__main__":
+if __name__ == "__main__":
     Thread(target=run_web).start()
     asyncio.run(run_bot())
