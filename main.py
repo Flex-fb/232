@@ -31,10 +31,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def main():
     app_bot = ApplicationBuilder().token(TOKEN).build()
     app_bot.add_handler(CommandHandler("start", start))
-    await app_bot.initialize()
-    await app_bot.start()
-    await app_bot.updater.start_polling()
-    await app_bot.updater.idle()
+    await app_bot.run_polling()
 
 if __name__ == "__main__":
     Thread(target=run_flask).start()
