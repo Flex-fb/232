@@ -2,17 +2,15 @@ import os
 import asyncio
 from flask import Flask
 from threading import Thread
-from telegram import BotCommand, InlineKeyboardMarkup, InlineKeyboardButton, Update
-from telegram.ext import (
-    ApplicationBuilder,
-    CommandHandler,
-    ContextTypes,
-)
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Новый токен переменной
-BOT_TOKEN = os.getenv("8120669890:AAGRiXQ8Vf6HonUbNZKakZhCBEHipEwKSro")
+# Токен бота (вставь напрямую или через переменную окружения)
+BOT_TOKEN = "8120669890:AAGRiXQ8Vf6HonUbNZKakZhCBEHipEwKSro"
+# Или, если из переменной окружения:
+# BOT_TOKEN = os.getenv("8120669890:AAGRiXQ8Vf6HonUbNZKakZhCBEHipEwKSro")
 
-# Flask-приложение для Render
+# Инициализация Flask
 flask_app = Flask(__name__)
 
 @flask_app.route('/')
@@ -37,11 +35,8 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def run_bot():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start_handler))
-    await app.start()
-    await app.updater.start_polling()
-    await app.updater.idle()
+    await app.run_polling()
 
-# Запуск Flask и бота параллельно
 if __name__ == "__main__":
     Thread(target=run_web).start()
     asyncio.run(run_bot())
