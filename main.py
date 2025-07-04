@@ -1,14 +1,13 @@
 import os
 import asyncio
-import nest_asyncio  # добавляем
-
+import nest_asyncio
 from flask import Flask
 from threading import Thread
 
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# ✅ Применяем обход ограничения с event loop
+# Обход ошибки с event loop
 nest_asyncio.apply()
 
 # Токен Telegram-бота
@@ -21,13 +20,15 @@ flask_app = Flask(__name__)
 def home():
     return "Бот работает!"
 
-# Запускаем Flask-сервер
+# Запуск Flask
 def run_web():
     port = int(os.environ.get("PORT", 5000))
     flask_app.run(host="0.0.0.0", port=port)
 
-# /start обработчик
+# /start обработчик с логом
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print(f"Получено сообщение: {update.message.text}")  # Лог для Render
+
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton("Написать менеджеру ✍️", url="https://t.me/finance_creditt")],
         [InlineKeyboardButton("Подписаться на канал 🧑‍💻", url="https://t.me/financ_credit")]
